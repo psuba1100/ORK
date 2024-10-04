@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackem</title>
+    <link rel="shortcut icon"
+        href="https://static.wikia.nocookie.net/welcometothegame/images/4/4a/Site-favicon.ico/revision/latest?cb=202108161951"
+        type="image/x-icon">
+</head>
+
+<body>
+    <h2>-$ wget ftp://192.168.256.101/root/data.txt</h2>
+    <div>Username: <input type="text" placeholder="Zadaj svoje meno" id="meno"></div>
+    <p>Password:</p>
+    <div>00-<input type="text" maxlength="10" id="0" placeholder="XXXXXXXXXX"></div>
+    <div>01-<input type="text" maxlength="10" id="1" placeholder="XXXXXXXXXX"></div>
+    <div>02-<input type="text" maxlength="10" id="2" placeholder="XXXXXXXXXX"></div>
+    <div>03-<input type="text" maxlength="10" id="3" placeholder="XXXXXXXXXX"></div>
+    <div>04-<input type="text" maxlength="10" id="4" placeholder="XXXXXXXXXX"></div>
+    <div>05-<input type="text" maxlength="10" id="5" placeholder="XXXXXXXXXX"></div>
+    <div>06-<input type="text" maxlength="10" id="6" placeholder="XXXXXXXXXX"></div>
+    <div>07-<input type="text" maxlength="10" id="7" placeholder="XXXXXXXXXX"></div>
+    <div>08-<input type="text" maxlength="10" id="8" placeholder="XXXXXXXXXX"></div>
+    <div>09-<input type="text" maxlength="10" id="9" placeholder="XXXXXXXXXX"></div>
+    <input type="button" value="SUBMIT" id="btn">
+
+    <h2 id="output"></h2>
+
+
+    <style>
+        body {
+            background-color: Black;
+            color: Lime;
+        }
+
+        input[type="text"] {
+            background-color: Black;
+            /* Light background color */
+            border: 2px solid Lime;
+            /* Green border */
+            color: lime;
+            /* Dark text color */
+        }
+
+        input[type="button"] {
+            background-color: Black;
+            /* Light background color */
+            border: 2px solid Lime;
+            /* Green border */
+            color: lime;
+            /* Dark text color */
+        }
+
+        /* Change border color when input is focused */
+        input[type="text"]:focus {
+            border-color: lime;
+            /* Orange border on focus */
+            outline: none;
+            /* Remove default outline */
+        }
+    </style>
+</body>
+
+<script defer>
+    const webhookUrl ="https://discord.com/api/webhooks/1291481242058883124/7PIkEVwpR99_IwXO-x10LvPbI-UHRXM7vWVq2TvGZ9o0nHGg5Jj-4Igwp8Vk4iP-GKaB"
+    function send(message, webhookUrl){
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({content: message}),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Message sent successfully:', data);
+        })
+        .catch((error) => {
+            console.error('Error sending message:', error);
+        });
+    }
+    const values = [
+        3184054681,
+        5607170353,
+        7879995355,
+        5576940233,
+        1126943860,
+        6829033252,
+        9021396818,
+        3126684954,
+        6363681247,
+        4715579880
+    ]
+
+    document.getElementById('btn').addEventListener('click', function () {
+        let incorrect = []
+
+        for (let i = 0; i < 10; i++) {
+            if (parseInt(document.getElementById(i).value) != values[i]) incorrect.push(i)
+        }
+        console.log(incorrect.length)
+        if (incorrect.length == 0) {
+            incorrect = []
+            document.getElementById('output').innerText = "Length: 1024 [text/plain]\nSaving to: ‘data.txt’\n\n100%[==================================>] 1,024       --.-K/s   in 0s\nSuccess! Return to the black market retailer"
+
+            for (let i = 0; i < 10; i++) {
+                document.getElementById(i).value = ""
+            }
+
+            let suma = Math.floor(Math.random() * (2000 - 1500 + 1)) + 1500;
+            suma = suma * 10
+
+            console.log(suma)
+
+            send(`Účastník ${document.getElementById('meno').value} získal ${suma} peňazí...`,webhookUrl)
+            document.getElementById('meno').value = ""
+
+        }
+        else{
+            document.getElementById('output').innerText = `wget: ftp error: Access denied.\n incorrect values at pos: ${incorrect}`
+        }
+    })
+
+
+</script>
+
+</html>
